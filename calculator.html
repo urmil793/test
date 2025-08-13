@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset ="UTF-8">
+   <meta http-equiva="x-UA-Compatible"content="IE=edge">
+   <meta name="viewport" content="width=device- width, initial-acale=1">
+   <title> calculator </title>
+
+   <style>
+
+*{
+  margin: 0; 
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  font-weight: bold;
+
+}
+ 
+body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    background-image: linear-gradient( #2200ff, #d900ff, #00bbff
+     );
+ 
+}
+
+.calculator{
+     border: 3px solid #ffffff;
+     padding: 20px;
+     border-radius: 25px;
+     background: transparent;
+     box-shadow: 3px 3px 15px rgb(255, 255, 255);
+
+}
+
+input{
+      width: 100%;
+      border: #ffffff;
+      padding: 24px;
+      margin: 10px;
+      background: transparent;
+      box-shadow : 0px 3px 12px #ffffff;
+      font-size: 50px;
+      text-align: right;
+      cursor: pointer;
+      color: rgb(255, 254, 254);
+}
+
+input::placeholder{
+       color: rgb(255, 254, 254);
+       font-size: 55px;
+}
+
+button{
+       border: #ffffff;
+       width: 20%;
+       height: 10vh;
+       margin: 10px;
+       border-radius: 50%;
+       background: #ffffff;
+       color: rgb(0, 0, 0) ;
+       font-size: 50px;
+       box-shadow : -8px -8px 15px rgbs(155, 155, 155, 0.1);
+       cursor: pointer;
+}
+
+.equalBtn{
+          background-color: #fb7c14;
+}
+
+.operator{
+          color: green;
+}
+   </style>
+
+</head>
+<body >
+  <div class="calculator">
+  <input type="text" placeholder="0" id="inputBox"  readonly >
+   <div> 
+         <button class="operator ac">AC</button>
+         <button class="operator del">DEL</button>
+         <button class="operator">%</button>
+         <button class="operator">/</button>
+   </div>
+   <div> 
+         <button>7</button>
+         <button>8</button>
+         <button>9</button>
+         <button class="operator">*</button>
+   </div>
+   <div> 
+         <button>4</button>
+         <button>5</button>
+         <button>6</button>
+         <button class="operator">-</button>
+   </div>
+   <div> 
+         <button>1</button>
+         <button>2</button>
+         <button>3</button>
+         <button class="operator">+</button>
+   </div>
+   <div> 
+         <button>00</button>
+         <button>0</button>
+         <button>.</button>
+         <button class="operator">=</button>
+   </div>
+
+
+</div>
+
+<script> let display = document.getElementById('inputBox');
+    let buttons = document.querySelectorAll('button');
+    
+    
+    let buttonsArray = Array.from(buttons);
+    
+    let string = "";
+    
+    buttonsArray.forEach(buttons => {
+    
+          buttons.addEventListener('click', (e) => {
+    
+                if(e.target.innerHTML == 'DEL'){ 
+                      string = string.substring(0, string.length-1);
+                      display.value = string;
+                }else if(e.target.innerHTML == 'AC'){
+                      string = "";
+                      display.value = string;
+                }else if(e.target.innerHTML == '='){
+                      string = eval(string);
+                      display.value = string; 
+                }else{ 
+                      string += e.target.innerHTML;
+                      display.value = string;
+    
+                };
+    
+          });
+    });
+    </script>
+
+</body>
+</html>

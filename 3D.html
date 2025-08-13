@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D Car Game - Police Chase</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        
+        #game-container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            overflow: hidden;
+            background-color: #6b8c42;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        #game-map {
+            position: absolute;
+            width: 2000px;
+            height: 2000px;
+            background-color: #6b8c42;
+        }
+        
+        #car {
+            position: absolute;
+            width: 40px;
+            height: 70px;
+            background-color: #e74c3c;
+            border-radius: 5px;
+            transform-origin: center;
+            z-index: 10;
+        }
+        
+        #car:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 50px;
+            background-color: #c0392b;
+            top: 10px;
+            left: 5px;
+            border-radius: 3px;
+        }
+        
+        .road {
+            position: absolute;
+            background-color: #34495e;
+        }
+        
+        .horizontal-road {
+            height: 60px;
+        }
+        
+        .vertical-road {
+            width: 60px;
+        }
+        
+        .building {
+            position: absolute;
+            background-color: #95a5a6;
+            border: 2px solid #7f8c8d;
+        }
+        
+        .tree {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #27ae60;
+            border-radius: 50%;
+        }
+        
+        .tree:after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background-color: #8b4513;
+            bottom: -20px;
+            left: 10px;
+        }
+        
+        .police-car {
+            position: absolute;
+            width: 40px;
+            height: 70px;
+            background-color: #3498db;
+            border-radius: 5px;
+            transform-origin: center;
+            z-index: 9;
+        }
+        
+        .police-car:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 50px;
+            background-color: #2980b9;
+            top: 10px;
+            left: 5px;
+            border-radius: 3px;
+        }
+        
+        .police-light {
+            position: absolute;
+            width: 40px;
+            height: 5px;
+            background-color: #f1c40f;
+            top: -5px;
+            animation: policeLight 0.5s infinite alternate;
+        }
+        
+        @keyframes policeLight {
+            0% { background-color: #f1c40f; }
+            100% { background-color: #e74c3c; }
+        }
+        
+        .friend-car {
+            position: absolute;
+            width: 40px;
+            height: 70px;
+            background-color: #2ecc71;
+            border-radius: 5px;
+            transform-origin: center;
+            z-index: 8;
+        }
+        
+        .friend-car:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 50px;
+            background-color: #27ae60;
+            top: 10px;
+            left: 5px;
+            border-radius: 3px;
+        }
+        
+        #speed-display {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        #police-alert {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            background-color: rgba(231, 76, 60, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        #instructions {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        #online-friends {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        #login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        #login-form {
+            background-color: #34495e;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+        
+        #login-form h2 {
+            color: white;
+            margin-top: 0;
+        }
+        
+        #login-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        
+        #login-form button {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="game-map">
+            <div id="car"></div>
+            <!-- Roads, buildings, police, and friends will be added by JavaScript -->
+        </div>
+        <div id="speed-display">Speed: 0 km/h</div>
+        <div id="police-alert">POLICE CHASE!</div>
+        <div id="instructions">Use arrow keys to drive</div>
+        <div id="online-friends">Online: 0</div>
+    </div>
+
+    <div id="login-modal">
+        <div id="login-form">
+            <h2>Enter Your Name</h2>
+            <input type="text" id="player-name" placeholder="Your name" maxlength="20">
+            <button id="start-game">Start Game</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Game elements
+    const gameContainer = document.getElementById('game-container');
+    const gameMap = document.getElementById('game-map');
+    const car = document.getElementById('car');
+    const speedDisplay = document.getElementById('speed-display');
+    const policeAlert = document.getElementById('police-alert');
+    const onlineFriendsDisplay = document.getElementById('online-friends');
+    const loginModal = document.getElementById('login-modal');
+    const playerNameInput = document.getElementById('player-name');
+    const startGameBtn = document.getElementById('start-game');
+    
+    // Game state
+    const state = {
+        playerId: null,
+        playerName: '',
+        carX: 1000,
+        carY: 1000,
+        carAngle: 0,
+        speed: 0,
+        maxSpeed: 5,
+        acceleration: 0.1,
+        deceleration: 0.05,
+        turningSpeed: 3,
+        keys: {
+            ArrowUp: false,
+            ArrowDown: false,
+            ArrowLeft: false,
+            ArrowRight: false
+        },
+        policeCars: [],
+        friends: {},
+        wantedLevel: 0,
+        lastUpdateTime: 0,
+        socket: null
+    };
+    
+    // Initialize WebSocket connection
+    function initWebSocket() {
+        // In a real app, replace with your WebSocket server URL
+        const wsUrl = 'wss://your-websocket-server.com';
+        // For local testing, you might use 'ws://localhost:8080'
+        
+        try {
+            state.socket = new WebSocket(wsUrl);
+            
+            state.socket.onopen = function() {
+                console.log('Connected to server');
+                // Send player info to server
+                sendPlayerUpdate();
+            };
+            
+            state.socket.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                
+                if (data.type === 'init') {
+                    state.playerId = data.playerId;
+                    updateOnlineFriends(data.onlinePlayers);
+                }
+                else if (data.type === 'playerUpdate') {
+                    updateFriendPosition(data);
+                }
+                else if (data.type === 'playerJoined') {
+                    addNewFriend(data);
+                    updateOnlineFriends(data.onlinePlayers);
+                }
+                else if (data.type === 'playerLeft') {
+                    removeFriend(data.playerId);
+                    updateOnlineFriends(data.onlinePlayers);
+                }
+            };
+            
+            state.socket.onclose = function() {
+                console.log('Disconnected from server');
+                // Try to reconnect after 5 seconds
+                setTimeout(initWebSocket, 5000);
+            };
+            
+            state.socket.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+        } catch (error) {
+            console.error('WebSocket initialization failed:', error);
+            // Retry after 5 seconds
+            setTimeout(initWebSocket, 5000);
+        }
+    }
+    
+    function sendPlayerUpdate() {
+        if (state.socket && state.socket.readyState === WebSocket.OPEN) {
+            const data = {
+                type: 'playerUpdate',
+                playerId: state.playerId,
+                name: state.playerName,
+                x: state.carX,
+                y: state.carY,
+                angle: state.carAngle,
+                speed: state.speed
+            };
+            state.socket.send(JSON.stringify(data));
+        }
+    }
+    
+    function updateFriendPosition(data) {
+        if (data.playerId === state.playerId) return;
+        
+        if (!state.friends[data.playerId]) {
+            addNewFriend(data);
+        } else {
+            const friend = state.friends[data.playerId];
+            friend.x = data.x;
+            friend.y = data.y;
+            friend.angle = data.angle;
+            
+            // Update DOM element
+            friend.element.style.left = `${data.x - 20}px`;
+            friend.element.style.top = `${data.y - 35}px`;
+            friend.element.style.transform = `rotate(${data.angle}deg)`;
+        }
+    }
+    
+    function addNewFriend(data) {
+        if (data.playerId === state.playerId) return;
+        
+        const friendCar = document.createElement('div');
+        friendCar.className = 'friend-car';
+        friendCar.style.left = `${data.x - 20}px`;
+        friendCar.style.top = `${data.y - 35}px`;
+        friendCar.style.transform = `rotate(${data.angle}deg)`;
+        
+        const nameTag = document.createElement('div');
+        nameTag.textContent = data.name || 'Friend';
+        nameTag.style.position = 'absolute';
+        nameTag.style.top = '-20px';
+        nameTag.style.left = '0';
+        nameTag.style.color = 'white';
+        nameTag.style.fontSize = '12px';
+        nameTag.style.textAlign = 'center';
+        nameTag.style.width = '100%';
+        nameTag.style.textShadow = '1px 1px 1px black';
+        friendCar.appendChild(nameTag);
+        
+        gameMap.appendChild(friendCar);
+        
+        state.friends[data.playerId] = {
+            element: friendCar,
+            x: data.x,
+            y: data.y,
+            angle: data.angle,
+            name: data.name
+        };
+    }
+    
+    function removeFriend(playerId) {
+        if (state.friends[playerId]) {
+            gameMap.removeChild(state.friends[playerId].element);
+            delete state.friends[playerId];
+        }
+    }
+    
+    function updateOnlineFriends(count) {
+        onlineFriendsDisplay.textContent = `Online: ${count}`;
+    }
+    
+    // Initialize the game map
+    function initMap() {
+        // Create roads
+        createRoads();
+        
+        // Create buildings
+        createBuildings();
+        
+        // Create trees and other objects
+        createEnvironment();
+        
+        // Create initial police cars
+        createPoliceCars(3);
+        
+        // Position the car in the center of the view
+        updateCarPosition();
+    }
+    
+    function createRoads() {
+        // Main horizontal roads
+        for (let y = 200; y < 2000; y += 300) {
+            const road = document.createElement('div');
+            road.className = 'road horizontal-road';
+            road.style.width = '2000px';
+            road.style.top = `${y}px`;
+            road.style.left = '0px';
+            gameMap.appendChild(road);
+        }
+        
+        // Main vertical roads
+        for (let x = 200; x < 2000; x += 300) {
+            const road = document.createElement('div');
+            road.className = 'road vertical-road';
+            road.style.height = '2000px';
+            road.style.left = `${x}px`;
+            road.style.top = '0px';
+            gameMap.appendChild(road);
+        }
+    }
+    
+    function createBuildings() {
+        // Create buildings along the roads
+        for (let y = 250; y < 2000; y += 300) {
+            for (let x = 250; x < 2000; x += 300) {
+                // Skip intersections
+                if ((x - 250) % 600 === 0 || (y - 250) % 600 === 0) continue;
+                
+                const building = document.createElement('div');
+                building.className = 'building';
+                building.style.width = `${Math.random() * 100 + 50}px`;
+                building.style.height = `${Math.random() * 100 + 50}px`;
+                building.style.left = `${x}px`;
+                building.style.top = `${y}px`;
+                
+                // Random building color
+                const brightness = Math.floor(Math.random() * 100 + 100);
+                building.style.backgroundColor = `rgb(${brightness}, ${brightness}, ${brightness})`;
+                
+                gameMap.appendChild(building);
+            }
+        }
+    }
+    
+    function createEnvironment() {
+        // Add some trees randomly
+        for (let i = 0; i < 100; i++) {
+            const tree = document.createElement('div');
+            tree.className = 'tree';
+            
+            // Place trees where there are no roads or buildings
+            let x, y;
+            do {
+                x = Math.random() * 1800 + 100;
+                y = Math.random() * 1800 + 100;
+            } while (isOnRoad(x, y) || isNearBuilding(x, y));
+            
+            tree.style.left = `${x}px`;
+            tree.style.top = `${y}px`;
+            gameMap.appendChild(tree);
+        }
+    }
+    
+    function createPoliceCars(count) {
+        for (let i = 0; i < count; i++) {
+            const policeCar = document.createElement('div');
+            policeCar.className = 'police-car';
+            
+            // Position police cars randomly on roads
+            let x, y;
+            do {
+                if (Math.random() > 0.5) {
+                    // Horizontal road
+                    const roadY = 200 + Math.floor(Math.random() * 7) * 300;
+                    x = Math.random() * 1800 + 100;
+                    y = roadY + 30;
+                } else {
+                    // Vertical road
+                    const roadX = 200 + Math.floor(Math.random() * 7) * 300;
+                    x = roadX + 30;
+                    y = Math.random() * 1800 + 100;
+                }
+            } while (distance(x, y, state.carX, state.carY) < 300);
+            
+            policeCar.style.left = `${x - 20}px`;
+            policeCar.style.top = `${y - 35}px`;
+            
+            // Add police lights
+            const light = document.createElement('div');
+            light.className = 'police-light';
+            policeCar.appendChild(light);
+            
+            gameMap.appendChild(policeCar);
+            
+            state.policeCars.push({
+                element: policeCar,
+                x: x,
+                y: y,
+                angle: Math.random() * 360,
+                speed: 2 + Math.random() * 2,
+                targetX: x,
+                targetY: y
+            });
+        }
+    }
+    
+    function isOnRoad(x, y) {
+        // Check horizontal roads
+        for (let roadY = 200; roadY < 2000; roadY += 300) {
+            if (y >= roadY && y <= roadY + 60) {
+                return true;
+            }
+        }
+        
+        // Check vertical roads
+        for (let roadX = 200; roadX < 2000; roadX += 300) {
+            if (x >= roadX && x <= roadX + 60) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    function isNearBuilding(x, y) {
+        // Simplified check - in a real game you'd need more precise collision detection
+        for (let buildingY = 250; buildingY < 2000; buildingY += 300) {
+            for (let buildingX = 250; buildingX < 2000; buildingX += 300) {
+                if ((x >= buildingX && x <= buildingX + 150) && 
+                    (y >= buildingY && y <= buildingY + 150)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    function distance(x1, y1, x2, y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+    
+    // Handle keyboard input
+    document.addEventListener('keydown', function(e) {
+        if (state.keys.hasOwnProperty(e.key)) {
+            state.keys[e.key] = true;
+            
+            // Increase wanted level when moving
+            if ((e.key === 'ArrowUp' || e.key === 'ArrowDown') && state.speed !== 0) {
+                increaseWantedLevel(0.1);
+            }
+        }
+    });
+    
+    document.addEventListener('keyup', function(e) {
+        if (state.keys.hasOwnProperty(e.key)) {
+            state.keys[e.key] = false;
+        }
+    });
+    
+    // Start game button
+    startGameBtn.addEventListener('click', function() {
+        const name = playerNameInput.value.trim();
+        if (name) {
+            state.playerName = name;
+            loginModal.style.display = 'none';
+            initMap();
+            initWebSocket();
+            gameLoop();
+        } else {
+            alert('Please enter your name');
+        }
+    });
+    
+    // Game loop
+    function gameLoop() {
+        const now = Date.now();
+        const deltaTime = now - state.lastUpdateTime;
+        state.lastUpdateTime = now;
+        
+        // Handle acceleration/deceleration
+        if (state.keys.ArrowUp) {
+            state.speed = Math.min(state.speed + state.acceleration, state.maxSpeed);
+        } else if (state.keys.ArrowDown) {
+            state.speed = Math.max(state.speed - state.acceleration, -state.maxSpeed / 2);
+        } else {
+            // Natural deceleration when no key is pressed
+            if (state.speed > 0) {
+                state.speed = Math.max(state.speed - state.deceleration, 0);
+            } else if (state.speed < 0) {
+                state.speed = Math.min(state.speed + state.deceleration, 0);
+            }
+        }
+        
+        // Handle turning
+        if (state.speed !== 0) {
+            if (state.keys.ArrowLeft) {
+                state.carAngle -= state.turningSpeed * (Math.abs(state.speed) / state.maxSpeed);
+            }
+            if (state.keys.ArrowRight) {
+                state.carAngle += state.turningSpeed * (Math.abs(state.speed) / state.maxSpeed);
+            }
+        }
+        
+        // Update car position based on speed and angle
+        if (state.speed !== 0) {
+            const angleInRadians = state.carAngle * Math.PI / 180;
+            state.carX += Math.sin(angleInRadians) * state.speed;
+            state.carY -= Math.cos(angleInRadians) * state.speed;
+            
+            // Boundary checking
+            state.carX = Math.max(20, Math.min(state.carX, 1980));
+            state.carY = Math.max(20, Math.min(state.carY, 1980));
+            
+            // Increase wanted level when moving fast
+            if (Math.abs(state.speed) > state.maxSpeed * 0.7) {
+                increaseWantedLevel(0.05);
+            }
+        }
+        
+        // Update police cars
+        updatePoliceCars(deltaTime);
+        
+        // Update display
+        updateCarPosition();
+        updateSpeedDisplay();
+        
+        // Send position update to server every 100ms
+        if (now % 100 < deltaTime) {
+            sendPlayerUpdate();
+        }
+        
+        requestAnimationFrame(gameLoop);
+    }
+    
+    function updatePoliceCars(deltaTime) {
+        const policeChaseDistance = 300 + state.wantedLevel * 100;
+        
+        state.policeCars.forEach(police => {
+            const distToPlayer = distance(police.x, police.y, state.carX, state.carY);
+            
+            if (state.wantedLevel > 0) {
+                // Police chase behavior
+                if (distToPlayer < policeChaseDistance) {
+                    // Chase the player
+                    police.targetX = state.carX;
+                    police.targetY = state.carY;
+                    
+                    // Show police alert if close enough
+                    if (distToPlayer < 200) {
+                        policeAlert.style.display = 'block';
+                    }
+                } else {
+                    // Wander randomly
+                    if (Math.random() < 0.01 || distance(police.x, police.y, police.targetX, police.targetY) < 50) {
+                        police.targetX = police.x + (Math.random() * 400 - 200);
+                        police.targetY = police.y + (Math.random() * 400 - 200);
+                        
+                        // Keep targets on roads
+                        if (!isOnRoad(police.targetX, police.targetY)) {
+                            if (Math.random() > 0.5) {
+                                // Snap to nearest horizontal road
+                                const roadY = 200 + Math.round((police.targetY - 200) / 300) * 300;
+                                police.targetY = roadY + 30;
+                            } else {
+                                // Snap to nearest vertical road
+                                const roadX = 200 + Math.round((police.targetX - 200) / 300) * 300;
+                                police.targetX = roadX + 30;
+                            }
+                        }
+                    }
+                }
+            } else {
+                // Normal patrol behavior
+                if (Math.random() < 0.01 || distance(police.x, police.y, police.targetX, police.targetY) < 50) {
+                    police.targetX = police.x + (Math.random() * 400 - 200);
+                    police.targetY = police.y + (Math.random() * 400 - 200);
+                    
+                    // Keep targets on roads
+                    if (!isOnRoad(police.targetX, police.targetY)) {
+                        if (Math.random() > 0.5) {
+                            // Snap to nearest horizontal road
+                            const roadY = 200 + Math.round((police.targetY - 200) / 300) * 300;
+                            police.targetY = roadY + 30;
+                        } else {
+                            // Snap to nearest vertical road
+                            const roadX = 200 + Math.round((police.targetX - 200) / 300) * 300;
+                            police.targetX = roadX + 30;
+                        }
+                    }
+                }
+            }
+            
+            // Move police car toward target
+            const angleToTarget = Math.atan2(police.targetY - police.y, police.targetX - police.x);
+            police.x += Math.cos(angleToTarget) * police.speed * (deltaTime / 16);
+            police.y += Math.sin(angleToTarget) * police.speed * (deltaTime / 16);
+            
+            // Update angle
+            police.angle = angleToTarget * 180 / Math.PI;
+            
+            // Boundary checking
+            police.x = Math.max(20, Math.min(police.x, 1980));
+            police.y = Math.max(20, Math.min(police.y, 1980));
+            
+            // Update DOM element
+            police.element.style.left = `${police.x - 20}px`;
+            police.element.style.top = `${police.y - 35}px`;
+            police.element.style.transform = `rotate(${police.angle}deg)`;
+            
+            // Check collision with player
+            if (distToPlayer < 30) {
+                // Police caught the player
+                if (state.wantedLevel > 0) {
+                    state.wantedLevel = 0;
+                    policeAlert.style.display = 'none';
+                    alert('You were caught by the police! Wanted level reset.');
+                }
+            }
+        });
+        
+        // Hide police alert if no police are close
+        const anyPoliceClose = state.policeCars.some(police => 
+            distance(police.x, police.y, state.carX, state.carY) < 200);
+        
+        if (!anyPoliceClose) {
+            policeAlert.style.display = 'none';
+        }
+    }
+    
+    function increaseWantedLevel(amount) {
+        if (state.wantedLevel < 5) {
+            state.wantedLevel += amount;
+            
+            // Add more police cars as wanted level increases
+            if (state.wantedLevel > 1 && state.policeCars.length < 5) {
+                createPoliceCars(1);
+            } else if (state.wantedLevel > 3 && state.policeCars.length < 8) {
+                createPoliceCars(1);
+            }
+        }
+    }
+    
+    function updateCarPosition() {
+        // Position the car on the map
+        car.style.left = `${state.carX - 20}px`;
+        car.style.top = `${state.carY - 35}px`;
+        car.style.transform = `rotate(${state.carAngle}deg)`;
+        
+        // Center the map view on the car
+        const containerWidth = gameContainer.clientWidth;
+        const containerHeight = gameContainer.clientHeight;
+        const mapX = containerWidth / 2 - state.carX;
+        const mapY = containerHeight / 2 - state.carY;
+        gameMap.style.transform = `translate(${mapX}px, ${mapY}px)`;
+    }
+    
+    function updateSpeedDisplay() {
+        const speedKmh = Math.abs(Math.round(state.speed * 20));
+        speedDisplay.textContent = `Speed: ${speedKmh} km/h`;
+        
+        // Change color based on speed
+        if (speedKmh > 80) {
+            speedDisplay.style.color = '#e74c3c';
+        } else if (speedKmh > 40) {
+            speedDisplay.style.color = '#f39c12';
+        } else {
+            speedDisplay.style.color = '#ffffff';
+        }
+    }
+});
+    </script>
+</body>
+</html>

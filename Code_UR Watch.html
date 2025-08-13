@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code_UR Watch</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #111;
+    }
+    .watch-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .circle {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 5px solid #fff;
+        position: relative;
+        background: conic-gradient(#ff0, #f0f, #0ff, #ff0);
+    }
+    
+    .hour-hand, .minute-hand, .second-hand {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 2px;
+        background-color: #fff;
+        transform-origin: bottom;
+        transform: translate(-50%, -100%);
+    }
+    
+    .hour-hand {
+        height: 50px;
+        background-color: #ff6347;
+    }
+    
+    .minute-hand {
+        height: 70px;
+        background-color: #000000;
+    }
+    
+    .second-hand {
+        height: 90px;
+        background-color: #007bff;
+    }
+    
+    </style>
+    
+    <script>
+    function rotateClock() {
+    const hourHand = document.querySelector('.hour-hand');
+    const minuteHand = document.querySelector('.minute-hand');
+    const secondHand = document.querySelector('.second-hand');
+    
+    const now = new Date();
+    
+    const seconds = now.getSeconds();
+    const minutes = now.getMinutes();
+    const hours = now.getHours();
+      // Rotate the hands according to current time
+    const secondDeg = (seconds / 60) * 360;
+    const minuteDeg = (minutes / 60) * 360 + (seconds / 60) * 6;
+    const hourDeg = (hours % 12) * 30 + (minutes / 60) * 30; 
+    
+    secondHand.style.transform = `translate(-50%, -100%) rotate(${secondDeg}deg)`;
+    minuteHand.style.transform = `translate(-50%, -100%) rotate(${minuteDeg}deg)`;
+    hourHand.style.transform = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
+    }    
+        setInterval(rotateClock, 1000);
+        rotateClock();
+        
+    </script>
+    
+</head>
+<body>
+    <div class="watch-container">
+        <div class="circle">
+            <div class="hour-hand"></div>
+            <div class="minute-hand"></div>
+            <div class="second-hand"></div>
+        </div>
+    </div>
+</body>
+</html>

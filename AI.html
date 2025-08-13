@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Education Loan | Urmil Bank</title>
+  <style>
+  /* Header Styles */
+        header {
+             background-image: linear-gradient(to bottom right, rgba(0, 55, 255, 0.6));
+            color: white;
+            padding: 0rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 2000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: gold;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        nav ul li a:hover {
+            
+            color: gold;
+            background: rgba(255,255,255,0.1);
+            
+        }
+        .jolly-roger {
+        font-size: 3em;
+        animation: float 3s ease-in-out infinite;
+         color: #ff0000; /* British red */
+        font-size: 3em;
+        animation: float 3s ease-in-out infinite;
+        text-shadow: 
+            0 0 5px #ff0000, 
+            0 0 100px #ff0000; /* Red glow with white highlight */
+        font-family: 'Times New Roman', serif; /* Classic British */
+        position: relative;
+        
+    }
+     .logo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .bank-name {
+        font-size: 2.5em;
+        color: #000;
+        text-shadow: 2px 2px 4px rgb(176, 255, 103);
+        font-style: italic;
+        
+    }
+    button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgb(255, 166, 0);
+    }
+@keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: rgba(91, 236, 255, 0.9);
+        min-width: 160px;
+        box-shadow: 30px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        border-radius: 10px;
+        padding: 10px;
+        top: 100%;
+        right: -30px;
+    }
+    
+    .dropdown-content a {
+        background-image: linear-gradient(to bottom right, 
+        rgba(111, 238, 255, 0.8), 
+        rgba(250, 255, 165, 0.8),
+        rgba(157, 188, 255, 0.6),
+        rgba(134, 255, 209, 0.6));
+        padding: 12px 16px;
+        
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+    
+    .dropdown-content a:hover {
+        background-color: rgba(111, 142, 255, 0.5);
+        transform: scale(1.02);
+    }
+    
+    .dropdown:hover .dropdown-content {
+        display: block;
+        animation: fadeIn 0.3s;
+    }
+    
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+    .dropdown01{
+       cursor: pointer; /* Added minimum width for better appearance */
+    
+    }
+    .dropdown2 {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dropdown2-content {
+        display: none;
+        position: absolute;
+        background-color: rgba(91, 236, 255, 0.9);
+        min-width: 160px;
+        box-shadow: 30px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        border-radius: 10px;
+        padding: 10px;
+        top: 50%;
+        left: 130px;
+    }
+    
+    .dropdown2-content a {
+        background-image: linear-gradient(to bottom right, 
+        rgba(111, 238, 255, 0.8), 
+        rgba(250, 255, 165, 0.8),
+        rgba(157, 188, 255, 0.6),
+        rgba(134, 255, 209, 0.6));
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+    
+    .dropdown2-content a:hover {
+        background-color: rgba(111, 142, 255, 0.5);
+        transform: scale(1.02);
+    }
+    
+    .dropdown2:hover .dropdown2-content {
+        display: block;
+        animation: fadeIn 0.3s;
+    }
+    
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+    .dropdown02{
+       cursor: pointer; /* Added minimum width for better appearance */
+    
+    }
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    section {
+      background: rgb(208, 238, 255);
+      padding: 25px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    h2 {
+      color: #0d47a1;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    button {
+      background-color: #1565c0;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0d47a1;
+    }
+    .result, .success-message {
+      display: none;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    .result {
+      background: #e0f7e9;
+      border: 1px solid #76d191;
+      color: #1c5f34;
+    }
+    .success-message {
+      background: #d1f0ff;
+      border: 1px solid #90d7ff;
+      color: #004d66;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+    section {
+      background: #c6e6ff;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+    h2 {
+      color: #002f6c;
+      margin-top: 0;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    input, select, button {
+      width: 98%;
+      padding: 12px;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    button {
+      background-color: #004a99;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #003366;
+    }
+    .result, .success-message {
+      display: none;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    .result {
+      background: #e6ffe6;
+      border: 1px solid #66cc66;
+      color: #006600;
+    }
+    .success-message {
+      background: #d0f0ff;
+      border: 1px solid #82d4ff;
+      color: #004466;
+    }
+    img.education-banner {
+      width: 100%;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+        <div class="jolly-roger">⚓  </div>
+        <h1 class="bank-name" title="⚓ BLACK PEARL BANK">Black Pearl Bank</h1>
+    </div>
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="C:\Users\dell\OneDrive\Pictures\ドキュメント\HTML (Code_UR)\HTML\HOME.html">Home</a></li>
+
+                    <div class="dropdown"><div class="dropdown01"><li>Services</li></div>
+        <div class="dropdown-content">
+        <div class="dropdown2"><div class="dropdown02"><a href="#" style="padding-right: 40px;">Bank Accounts</a></div>
+        <div class="dropdown2-content">
+          <a href="C:\Users\dell\OneDrive\Pictures\ドキュメント\HTML (Code_UR)\HTML\Savings Accounts.html">Savings Accounts</a>
+          <a href="C:\Users\dell\OneDrive\Pictures\ドキュメント\HTML (Code_UR)\HTML\Current Account.html">Current Account</a>
+          <a href="C:\Users\dell\OneDrive\Pictures\ドキュメント\HTML (Code_UR)\HTML\Fixed Deposit Account.html">Fixed Deposit Account</a>
+          <a href="C:\Users\dell\OneDrive\Pictures\ドキュメント\HTML (Code_UR)\HTML\Fixed Deposit Account.html">Recurring Deposit Account</a>
+          <a href="C:\Users\dell\OneDrive\Pictures\ドキュメント\HTML (Code_UR)\HTML\NRI Accounts.html">NRI Accounts</a>
+        </div>
+      </div>
+      <div class="dropdown2"><div class="dropdown02"><a href="" style="padding-right: 49px;"> Loan Services</a></div>
+        <div class="dropdown2-content">
+          <a href="C:\Users\dell\OneDrive\Pictures\ドキュメント\HTML (Code_UR)\HTML\Personal Loan.html">Personal Loan</a>
+          <a href="C:\Users\dell\OneDrive\Pictures\ドキュメント\HTML (Code_UR)\HTML\Home Loan.html" >Home Loan</a>
+          <a href="C:\Users\dell\OneDrive\Pictures\ドキュメント\HTML (Code_UR)\HTML\Car Loan.html">Car Loan</a>
+          <a href="#">Education Loan</a>
+          <a href="#">Business Loan</a>
+          <a href="#">Gold Loan</a>
+        </div>
+      </div>
+      <div class="dropdown2"><div class="dropdown02"><a href="#" style="padding-right: 37px;">Digital Services</a></div>
+        <div class="dropdown2-content">
+          <a href="#">Internet Banking</a>
+          <a href="#">Mobile Banking</a>
+          <a href="#">UPI Payments</a>
+          <a href="#">SMS Banking</a>
+          <a href="#">ATM/Debit Card Services</a>
+          <a href="#">QR Code Payment</a>
+        </div>
+      </div>
+       <div class="dropdown2"><div class="dropdown02"><a href="#" style="padding-right: 23px;">Business Services</a></div>
+        <div class="dropdown2-content">
+          <a href="#">Business Accounts</a>
+          <a href="#">Corporate Loans</a>
+          <a href="#">Merchant Services</a>
+          <a href="#">Payment Gateway</a>
+          <a href="#">Trade Finance</a>
+        </div>
+      </div>
+       <div class="dropdown2"><div class="dropdown02"><a href="#" style="padding-right: 88px;">Security</a></div>
+        <div class="dropdown2-content">
+          <a href="#">Credit Card Protection</a>
+          <a href="#">Account Alerts</a>
+          <a href="#">Fraud Detection</a>
+        </div>
+      </div>
+      <div class="dropdown2"><div class="dropdown02"><a href="#" style="padding-right: 76px;">Insurance</a></div>
+        <div class="dropdown2-content">
+          <a href="#">Life Insurance</a>
+          <a href="#">Health Insurance</a>
+        </div>
+      </div>
+       <div class="dropdown2"><div class="dropdown02"><a href="#" style="padding-right: 42px;">Other Services</a></div>
+        <div class="dropdown2-content" style="top: -200%;" >
+          <a href="#">Account Opening Online</a>
+          <a href="#">Money Transfer (NEFT, RTGS, IMPS)</a>
+          <a href="#">Passbook & e-Statement</a>
+          <a href="#">Check Book Request</a>
+          <a href="#">Customer Support</a>
+        </div>
+      </div>
+        </div>
+      </div>
+                    <li><a href="C:\Users\dell\OneDrive\Pictures\ドキュメント\HTML (Code_UR)\HTML\AboutUs.html">About Us</a></li>
+                    <li><a href="C:\Users\dell\OneDrive\Pictures\ドキュメント\HTML (Code_UR)\HTML\contectUs.html">Contact</a></li>
+                    <li><a href="C:\Users\dell\OneDrive\Pictures\ドキュメント\HTML (Code_UR)\HTML\login.html" class="login-btn">Login</a></li>
+                </ul>
+                
+            </nav>
+        </div>
+    </header>
+<div class="container">
+  <section>
+    <h2>Why Choose Our Education Loan?</h2>
+    <ul>
+      <li>🎓 Covers tuition, hostel, travel, books, and laptop expenses</li>
+      <li>🏫 Loans available for studies in India and abroad</li>
+      <li>💰 Upto ₹50 Lakhs with flexible repayment</li>
+      <li>📉 Competitive interest rates from 8.75% p.a.</li>
+      <li>🕒 Moratorium period till course completion + 1 year</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Eligibility Criteria</h2>
+    <ul>
+      <li>Indian citizen aged 18 to 35</li>
+      <li>Admission in a recognized institution</li>
+      <li>Parent or guardian as co-applicant</li>
+      <li>Valid academic records and collateral (if applicable)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Required Documents</h2>
+    <ul>
+      <li>Admission letter & fee structure</li>
+      <li>ID proof, address proof, and academic certificates</li>
+      <li>Income documents of co-applicant</li>
+      <li>Bank statement of last 6 months</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>EMI Calculator</h2>
+    <input type="number" id="loanAmount" placeholder="Loan Amount (₹)" />
+    <input type="number" id="interestRate" placeholder="Interest Rate (%)" />
+    <input type="number" id="loanTenure" placeholder="Tenure (Months)" />
+    <button onclick="calculateEMI()">Calculate EMI</button>
+    <div class="result" id="emiResult"></div>
+  </section>
+
+  <section>
+    <h2>Apply for Education Loan</h2>
+    <form id="loanForm">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Email Address" required />
+      <input type="tel" id="phone" placeholder="Mobile Number" required />
+      <input type="text" id="course" placeholder="Course & Institute Name" required />
+      <select id="studyLocation" required>
+        <option value="">Study Location</option>
+        <option>India</option>
+        <option>Abroad</option>
+      </select>
+      <button type="submit">Submit Application</button>
+    </form>
+    <div class="success-message" id="successMessage">
+      ✅ Your education loan application has been received successfully!
+    </div>
+  </section>
+
+</div>
+
+<script>
+  function calculateEMI() {
+    const P = parseFloat(document.getElementById("loanAmount").value);
+    const annualRate = parseFloat(document.getElementById("interestRate").value);
+    const N = parseInt(document.getElementById("loanTenure").value);
+
+    if (!P || !annualRate || !N || P <= 0 || annualRate <= 0 || N <= 0) {
+      alert("Please fill all EMI fields with valid numbers.");
+      return;
+    }
+
+    const r = annualRate / 12 / 100;
+    const emi = (P * r * Math.pow(1 + r, N)) / (Math.pow(1 + r, N) - 1);
+    const total = emi * N;
+    const interest = total - P;
+
+    const resultDiv = document.getElementById("emiResult");
+    resultDiv.innerHTML = `
+      <strong>Monthly EMI:</strong> ₹${emi.toFixed(2)}<br>
+      <strong>Total Interest:</strong> ₹${interest.toFixed(2)}<br>
+      <strong>Total Payment:</strong> ₹${total.toFixed(2)}
+    `;
+    resultDiv.style.display = "block";
+  }
+
+  document.getElementById("loanForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    document.getElementById("successMessage").style.display = "block";
+    this.reset();
+  });
+</script>
+
+</body>
+</html>

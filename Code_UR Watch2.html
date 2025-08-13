@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code_UR Watch</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #2d2d2d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+}
+
+.caracal-watch-container {
+    background-color: #3e3e3e;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+
+.caracal-watch {
+    color: #f1c40f; /* Gold color */
+    font-weight: bold;
+}
+
+.time {
+    font-size: 80px;
+    letter-spacing: 2px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.date {
+    font-size: 24px;
+    color: #ccc;
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .time {
+        font-size: 60px;
+    }
+    .date {
+        font-size: 20px;
+    }
+}
+
+    </style>
+    <script>
+        function updateTime() {
+    const timeElement = document.getElementById('time');
+    const dateElement = document.getElementById('date');
+    const now = new Date();
+
+    // Get current time
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
+
+    // Format the time as HH:MM:SS
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    // Get current date
+    const months = ["January", "February", "March", "April", "May","June",
+    "July", "August", "September", "October", "November",
+    "December"];
+    const day = now.getDate();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+    const formattedDate = `${month} ${day}, ${year}`;
+
+    // Update the time and date
+    timeElement.textContent = `${hours}:${minutes}:${seconds}`;
+    dateElement.textContent = formattedDate;
+}
+
+setInterval(updateTime, 1000);
+updateTime();
+
+    </script>
+</head>
+<body>
+    <div class="caracal-watch-container">
+        <div id="caracal-watch" class="caracal-watch">
+            <div id="time" class="time">00:00:00</div>
+            <div id="date" class="date">January 1, 2025</div>
+        </div>
+    </div>
+    <script> let display = document.getElementById('inputBox');
+        let buttons = document.querySelectorAll('button');
+        
+        
+        let buttonsArray = Array.from(buttons);
+        
+        let string = "";
+        
+        buttonsArray.forEach(buttons => {
+        
+              buttons.addEventListener('click', (e) => {
+        
+                    if(e.target.innerHTML == 'DEL'){ 
+                          string = string.substring(0, string.length-1);
+                          display.value = string;
+                    }else if(e.target.innerHTML == 'AC'){
+                          string = "";
+                          display.value = string;
+                    }else if(e.target.innerHTML == '='){
+                          string = eval(string);
+                          display.value = string; 
+                    }else{ 
+                          string += e.target.innerHTML;
+                          display.value = string;
+        
+                    };
+        
+              });
+        });
+        </script>
+    
+</body>
+</html>
